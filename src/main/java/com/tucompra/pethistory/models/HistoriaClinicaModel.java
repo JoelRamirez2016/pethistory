@@ -6,6 +6,7 @@ package com.tucompra.pethistory.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -23,13 +26,16 @@ import org.hibernate.annotations.OnDeleteAction;
  * @author Holberton
  */
 @Entity
-@Table(name = "historia_clinica")
+@Table(name = "historias_clinicas")
 public class HistoriaClinicaModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    private String fecha_creacion;   
+    
+    @CreationTimestamp
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha_creacion;   
     
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "mascota_id", nullable=false)
@@ -45,11 +51,11 @@ public class HistoriaClinicaModel implements Serializable {
         this.id = id;
     }
 
-    public String getFecha_creacion() {
+    public Date getFecha_creacion() {
         return fecha_creacion;
     }
 
-    public void setFecha_creacion(String fecha_creacion) {
+    public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
     }
 

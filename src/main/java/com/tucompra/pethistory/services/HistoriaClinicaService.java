@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import com.tucompra.pethistory.models.HistoriaClinicaModel;
 import com.tucompra.pethistory.repositories.HistoriaClinicaRepository;
-import com.tucompra.pethistory.repositories.HistoriaClinicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,13 +25,13 @@ public class HistoriaClinicaService {
         return (ArrayList<HistoriaClinicaModel>) historiaClinicaRepository.findAll();
     }
     
-    public ArrayList<HistoriaClinicaModel> obtenerHistoriaClinicaByMascota(Long usuarioId){
-        return (ArrayList<HistoriaClinicaModel>) historiaClinicaRepository.findByMascotaId(usuarioId);
+    public HistoriaClinicaModel obtenerHistoriaClinicaByMascota(Long mascotaId){
+        return historiaClinicaRepository.findByMascotaId(mascotaId);
     }
 
     @Transactional
-    public HistoriaClinicaModel guardarHistoriaClinica(HistoriaClinicaModel mascota){
-        return historiaClinicaRepository.save(mascota);
+    public HistoriaClinicaModel guardarHistoriaClinica(HistoriaClinicaModel hc){
+        return historiaClinicaRepository.save(hc);
     }
 
     public Optional<HistoriaClinicaModel> obtenerPorId(Long id){
@@ -40,7 +39,7 @@ public class HistoriaClinicaService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void eliminaristoriaClinica(Long id) {
+    public void eliminarHistoriaClinica(Long id) {
         historiaClinicaRepository.deleteById(id);
     }
 }

@@ -25,12 +25,12 @@ public class MascotaController {
     @Autowired
     UsuarioService usuarioService;
 
-    @GetMapping("/usuario/{usuarioId}/mascotas")
+    @GetMapping("/usuarios/{usuarioId}/mascotas")
     public ArrayList<MascotaModel> obtenerMascotasByUsuario(@PathVariable (value = "usuarioId") Long usuarioId){
         return mascotaService.obtenerMascotasByUsuario(usuarioId);
     }
 
-    @PostMapping("/usuario/{usuarioId}/mascotas")
+    @PostMapping("/usuarios/{usuarioId}/mascotas")
     public MascotaModel guardarMascota(@PathVariable (value = "usuarioId") Long usuarioId,
                                         @RequestBody MascotaModel mascota){
         return this.usuarioService.obtenerPorId(usuarioId).map(usuario -> {
@@ -39,7 +39,7 @@ public class MascotaController {
         }).orElseThrow(() -> new RuntimeException("Resource Not Found"));
     }
     
-    @PutMapping("/usuario/{usuarioId}/mascotas/{mascotaId}")
+    @PutMapping("/usuarios/{usuarioId}/mascotas/{mascotaId}")
     public MascotaModel actualizarMascota(@PathVariable (value = "usuarioId") Long usuarioId, 
         @PathVariable (value = "mascotaId") Long mascotaId, 
         @RequestBody MascotaModel mascota){
@@ -55,7 +55,6 @@ public class MascotaController {
     
     @GetMapping("mascotas/{id}")
     public Optional<MascotaModel> obtenerMascotaPorId(@PathVariable("id") Long id) {
-        System.out.println("mascota id: " + id);
         return this.mascotaService.obtenerPorId(id);
     }
     

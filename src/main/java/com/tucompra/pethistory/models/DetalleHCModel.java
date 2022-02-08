@@ -4,25 +4,29 @@
  */
 package com.tucompra.pethistory.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
  * @author Holberton
  */
 @Entity
-@Table(name = "detalle_historia_clinica")
+@Table(name = "detalles_historia_clinica")
 
-public class DetalleHCModel {
+public class DetalleHCModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
@@ -37,13 +41,16 @@ public class DetalleHCModel {
     private String habitad;
     private String observacion;
     
-    @ManyToOne
     @JoinColumn(name="historia_clinica_id", nullable=false)
-    private HistoriaClinicaModel historia_clinica;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private HistoriaClinicaModel historiaClinica;
     
-    @OneToOne
-    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "colaborador_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private ColaboradorModel colaborador;
 
     public Long getId() {
@@ -119,11 +126,11 @@ public class DetalleHCModel {
     }
 
     public HistoriaClinicaModel getHistoria_clinica() {
-        return historia_clinica;
+        return historiaClinica;
     }
 
     public void setHistoria_clinica(HistoriaClinicaModel historia_clinica) {
-        this.historia_clinica = historia_clinica;
+        this.historiaClinica = historia_clinica;
     }
 
     public ColaboradorModel getColaborador() {

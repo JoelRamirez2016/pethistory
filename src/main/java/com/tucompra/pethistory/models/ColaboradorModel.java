@@ -1,11 +1,12 @@
 package com.tucompra.pethistory.models;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "colaborador")
-public class ColaboradorModel {
+@Table(name = "colaboradores")
+public class ColaboradorModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +18,7 @@ public class ColaboradorModel {
     private String tipo_documento;
     private Integer documento_identificacion;
     private String cargo;
-    
-    @OneToOne(mappedBy = "colaborador", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private DetalleHCModel detalle;   
+  
 
     public Long getId() {
         return id;
@@ -70,12 +68,5 @@ public class ColaboradorModel {
         this.cargo = cargo;
     }
 
-    public DetalleHCModel getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(DetalleHCModel detalle) {
-        this.detalle = detalle;
-    }
         
 }

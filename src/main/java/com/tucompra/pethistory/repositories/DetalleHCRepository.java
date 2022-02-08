@@ -4,7 +4,7 @@
  */
 package com.tucompra.pethistory.repositories;
 
-import com.tucompra.pethistory.models.HistoriaClinicaModel;
+import com.tucompra.pethistory.models.DetalleHCModel;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,8 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface HistoriaClinicaRepository extends CrudRepository<HistoriaClinicaModel, Long> {
-    HistoriaClinicaModel findByMascotaId(Long mascotaId);
+public interface DetalleHCRepository extends CrudRepository<DetalleHCModel, Long> {
+    List<DetalleHCModel> findByHistoriaClinicaId(Long hcId);
+    List<DetalleHCModel> findByColaboradorId(Long colaboradorId);
 
 }

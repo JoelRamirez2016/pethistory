@@ -15,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -26,7 +24,7 @@ import org.hibernate.annotations.OnDeleteAction;
  * @author Holberton
  */
 @Entity
-@Table(name = "mascota")
+@Table(name = "mascotas")
 public class MascotaModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,14 +79,6 @@ public class MascotaModel implements Serializable {
     public void setUsuario(UsuarioModel usuario) {
         this.usuario = usuario;
     }
-/*
-    public HistoriaClinicaModel getHistoria_clinica() {
-        return historia_clinica;
-    }
 
-    public void setHistoria_clinica(HistoriaClinicaModel historia_clinica) {
-        this.historia_clinica = historia_clinica;
-    }
-*/
     
 }
