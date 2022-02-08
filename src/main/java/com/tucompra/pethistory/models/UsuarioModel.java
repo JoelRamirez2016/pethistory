@@ -1,11 +1,12 @@
 package com.tucompra.pethistory.models;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class UsuarioModel {
+public class UsuarioModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +20,6 @@ public class UsuarioModel {
     private String estado;
     private String sexo;
     
-    @OneToMany(mappedBy="usuario")
-    private List<MascotaModel> mascotas;   
-
     public Long getId() {
         return id;
     }
@@ -78,12 +76,5 @@ public class UsuarioModel {
         this.sexo = sexo;
     }
 
-    public List<MascotaModel> getMascotas() {
-        return mascotas;
-    }
-
-    public void setMascotas(List<MascotaModel> mascotas) {
-        this.mascotas = mascotas;
-    }
     
 }

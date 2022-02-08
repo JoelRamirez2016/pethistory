@@ -4,17 +4,19 @@
  */
 package com.tucompra.pethistory.models;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -22,29 +24,18 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "historia_clinica")
-public class HistoriaClinicaModel {
+public class HistoriaClinicaModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
     private String fecha_creacion;   
     
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "mascota_id")
-    private MascotaModel mascota;
-    
-    @OneToMany(mappedBy="historia_clinica")
-    private List<DetalleHCModel> detalles;   
-
-    public List<DetalleHCModel> getDetalles() {
-        return detalles;
-    }
-
-    public void setDetalles(List<DetalleHCModel> detalles) {
-        this.detalles = detalles;
-    }
-
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "mascota_id", nullable=false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private MascotaModel mascota;    
 
     public Long getId() {
         return id;

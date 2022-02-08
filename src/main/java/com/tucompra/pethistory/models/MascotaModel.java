@@ -4,9 +4,12 @@
  */
 package com.tucompra.pethistory.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -22,7 +27,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "mascota")
-public class MascotaModel {
+public class MascotaModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
@@ -31,13 +36,11 @@ public class MascotaModel {
     private String raza;
     private String sexo;   
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="usuario_id", nullable=false)
-    private ColaboradorModel usuario;
-    
-    @OneToOne(mappedBy = "mascota", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private HistoriaClinicaModel historia_clinica;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private UsuarioModel usuario;    
 
     public Long getId() {
         return id;
@@ -71,13 +74,21 @@ public class MascotaModel {
         this.sexo = sexo;
     }
 
-    public ColaboradorModel getUsuario() {
+    public UsuarioModel getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(ColaboradorModel usuario) {
+    public void setUsuario(UsuarioModel usuario) {
         this.usuario = usuario;
     }
+/*
+    public HistoriaClinicaModel getHistoria_clinica() {
+        return historia_clinica;
+    }
 
+    public void setHistoria_clinica(HistoriaClinicaModel historia_clinica) {
+        this.historia_clinica = historia_clinica;
+    }
+*/
     
 }
