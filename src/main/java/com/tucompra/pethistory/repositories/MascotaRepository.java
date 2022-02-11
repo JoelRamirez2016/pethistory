@@ -6,12 +6,13 @@ package com.tucompra.pethistory.repositories;
 
 import com.tucompra.pethistory.models.MascotaModel;
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Holberton
  */
-public interface MascotaRepository extends CrudRepository<MascotaModel, Long> {
+public interface MascotaRepository extends JpaRepository<MascotaModel, Long> {
     List<MascotaModel> findByUsuarioId(Long usuarioId);
 }

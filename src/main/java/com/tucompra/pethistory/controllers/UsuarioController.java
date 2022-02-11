@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import com.tucompra.pethistory.models.UsuarioModel;
 import com.tucompra.pethistory.services.UsuarioService;
+import java.util.Collections;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author Holberton
  */
-
+@CrossOrigin(origins="*", maxAge=3200)
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -31,11 +33,15 @@ public class UsuarioController {
     public UsuarioModel guardarUsuario(@RequestBody UsuarioModel usuario){
         return this.usuarioService.guardarUsuario(usuario);
     }
-    /*
+    
     @PutMapping( path = "/{id}")
-    public UsuarioModel actualizarUsuario(@PathVariable("id") Long id){
+    public UsuarioModel actualizarUsuario(@PathVariable("id") Long id,
+            @RequestBody UsuarioModel usuario){
+        if(this.usuarioService.obtenerPorId(id) == null) {
+            throw new RuntimeException("usuario " + id + " not found");
+        }
         return this.usuarioService.guardarUsuario(usuario);
-    }*/
+    }
     
     @GetMapping( path = "/{id}")
     public Optional<UsuarioModel> obtenerUsuarioPorId(@PathVariable("id") Long id) {
@@ -43,12 +49,12 @@ public class UsuarioController {
     }
 
     @DeleteMapping( path = "/{id}")
-    public String eliminarPorId(@PathVariable("id") Long id){
+    public Set<String> eliminarPorId(@PathVariable("id") Long id){
         boolean ok = this.usuarioService.eliminarUsuario(id);
         if (ok){
-            return "Se eliminó el usuario con id " + id;
+            return Collections.singleton("Se eliminó el usuario con id " + id);
         }else{
-            return "No pudo eliminar el usuario con id" + id;
+            return Collections.singleton("No pudo eliminar el usuario con id" + id);
         }
     }
 

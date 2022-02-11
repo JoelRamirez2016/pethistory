@@ -5,6 +5,7 @@
 package com.tucompra.pethistory.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,13 +45,13 @@ public class DetalleHCModel implements Serializable {
     @JoinColumn(name="historia_clinica_id", nullable=false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     private HistoriaClinicaModel historiaClinica;
     
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "colaborador_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     private ColaboradorModel colaborador;
 
     public Long getId() {

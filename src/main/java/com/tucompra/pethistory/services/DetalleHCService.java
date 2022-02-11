@@ -26,7 +26,7 @@ public class DetalleHCService {
     }
     
     public ArrayList<DetalleHCModel> obtenerDetallesByHistoriaClinica(Long hcId){
-        return (ArrayList<DetalleHCModel>) detallehcRepository.findByHistoriaClinicaId(hcId);
+        return (ArrayList<DetalleHCModel>) detallehcRepository.findByHistoriaClinica_Id(hcId);
     }
     
     public ArrayList<DetalleHCModel> obtenerDetallesByColaborador(Long colabId){

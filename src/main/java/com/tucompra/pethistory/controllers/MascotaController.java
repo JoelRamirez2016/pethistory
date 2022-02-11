@@ -9,6 +9,8 @@ import java.util.Optional;
 import com.tucompra.pethistory.models.MascotaModel;
 import com.tucompra.pethistory.services.MascotaService;
 import com.tucompra.pethistory.services.UsuarioService;
+import java.util.Collections;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author Holberton
  */
-
+@CrossOrigin(origins="*", maxAge=3200)
 @RestController
 @RequestMapping
 public class MascotaController {
@@ -24,6 +26,11 @@ public class MascotaController {
     MascotaService mascotaService;
     @Autowired
     UsuarioService usuarioService;
+
+    @GetMapping("/mascotas")
+    public ArrayList<MascotaModel> obtenerMascotas(){
+        return mascotaService.obtenerMascotas();
+    }
 
     @GetMapping("/usuarios/{usuarioId}/mascotas")
     public ArrayList<MascotaModel> obtenerMascotasByUsuario(@PathVariable (value = "usuarioId") Long usuarioId){
@@ -59,12 +66,12 @@ public class MascotaController {
     }
     
     @DeleteMapping("mascotas/{id}")
-    public String eliminarPorId(@PathVariable("id") Long id){
+    public Set<String> eliminarPorId(@PathVariable("id") Long id){
         try{
             this.mascotaService.eliminarMascota(id);
-            return "Se eliminó el mascota con id " + id;
+            return Collections.singleton("Se eliminó el mascota con id " + id);
         }catch(Exception err){
-            return "No pudo eliminar el mascota con id " + id;
+            return Collections.singleton("No pudo eliminar el mascota con id " + id);
         }
     }
     

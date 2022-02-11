@@ -9,6 +9,8 @@ import java.util.Optional;
 import com.tucompra.pethistory.models.HistoriaClinicaModel;
 import com.tucompra.pethistory.services.HistoriaClinicaService;
 import com.tucompra.pethistory.services.MascotaService;
+import java.util.Collections;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author Holberton
  */
-
+@CrossOrigin(origins="*", maxAge=3200)
 @RestController
 @RequestMapping
 public class HistoriaClincaController {
@@ -25,6 +27,11 @@ public class HistoriaClincaController {
     @Autowired
     MascotaService mascotaService;
 
+    @GetMapping("/hcs")
+    public ArrayList<HistoriaClinicaModel> obtenerHistoriasClinicas(){
+        return hcService.obtenerHistoriasClinicas();
+    }
+    
     @GetMapping("/mascotas/{mascotaId}/hc")
     public HistoriaClinicaModel obtenerHistoriaClinicaByMascota(
             @PathVariable (value = "mascotaId") Long mascotaId){
@@ -55,18 +62,18 @@ public class HistoriaClincaController {
         return this.hcService.guardarHistoriaClinica(mascota);
     }
     
-    @GetMapping("hc/{id}")
+    @GetMapping("hcs/{id}")
     public Optional<HistoriaClinicaModel> obtenerHistoriaClinicaPorId(@PathVariable("id") Long id) {
         return this.hcService.obtenerPorId(id);
     }
     
-    @DeleteMapping("hc/{id}")
-    public String eliminarPorId(@PathVariable("id") Long id){
+    @DeleteMapping("hcs/{id}")
+    public Set<String> eliminarPorId(@PathVariable("id") Long id){
         try{
             this.hcService.eliminarHistoriaClinica(id);
-            return "Se eliminó el historia clinica con id " + id;
+            return Collections.singleton("Se eliminó el historia clinica con id " + id);
         }catch(Exception err){
-            return "No se pudo eliminar el historia clinica con id " + id;
+            return Collections.singleton("No se pudo eliminar el historia clinica con id " + id);
         }
     }
     

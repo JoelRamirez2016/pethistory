@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import com.tucompra.pethistory.models.ColaboradorModel;
 import com.tucompra.pethistory.services.ColaboradorService;
+import java.util.Collections;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author Holberton
  */
-
+@CrossOrigin(origins="*", maxAge=3200)
 @RestController
 @RequestMapping("/colaboradores")
 public class ColaboradorController {
@@ -48,12 +50,12 @@ public class ColaboradorController {
     }
 
     @DeleteMapping( path = "/{id}")
-    public String eliminarPorId(@PathVariable("id") Long id){
+    public Set<String> eliminarPorId(@PathVariable("id") Long id){
         try{
             this.colaboradorService.eliminarColaborador(id);
-            return "Se eliminó el colaborador con id " + id;
+            return Collections.singleton("Se eliminó el colaborador con id " + id);
         }catch(Exception err){
-            return "No pudo eliminar el colaborador con id" + id;
+            return Collections.singleton("No pudo eliminar el colaborador con id" + id);
         }
     }
 
